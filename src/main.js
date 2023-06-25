@@ -4,10 +4,10 @@ import { firebaseApp } from './firebase'
 import './style.css'
 import App from './App.vue'
 
-const app  = createApp(App);
+const app = createApp(App)
 
 app.use(VueFire, {
-    firebaseApp,
-});
+    firebaseApp
+})
 
-app.mount('#app');
+app.mount('#app')
