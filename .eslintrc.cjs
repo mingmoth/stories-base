@@ -29,5 +29,7 @@ module.exports = {
         "vue"
     ],
     "rules": {
+        'indent': ['warn', 4],
+        'max-depth': ['warn', 4],
     }
 }
