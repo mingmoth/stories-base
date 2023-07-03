@@ -1,9 +1,17 @@
 <script setup>
+import { onMounted } from 'vue'
+import { getStoryIdList, fetchStoriesData } from './store'
+import StoryImage from './components/StoryImage.vue'
+
+onMounted(async () => {
+    await getStoryIdList()
+    await fetchStoriesData()
+})
 </script>
 
 <template>
   <div>
-    Stories
+    <StoryImage />
   </div>
 </template>
 
