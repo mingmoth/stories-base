@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import {
     currentStory,
     mapState,
@@ -9,7 +9,6 @@ import {
 
 // story 顯示相關參數
 const isStoryLoaded = computed(() => Object.keys(currentStory).length > 0)
-const storyIndex = computed(() => mapState.index)
 
 // 播放參數
 const isAutoDisplay = ref(null)
@@ -44,11 +43,10 @@ function resumeDisplay () {
     }, remainingTime.value)
 }
 
-// 先依 story index '是否變化' 決定播放行為
-watch(storyIndex, async (storyIndex, prevStoryIndex) => {
+function imageLoaded () {
     remainingTime.value = currentStory.value.duration
     autoDisplay()
-})
+}
 
 </script>
 
@@ -68,6 +66,12 @@ watch(storyIndex, async (storyIndex, prevStoryIndex) => {
         >
             <div>{{ currentStory.id }}</div>
             <div>{{ currentStory.text }}</div>
+            <img
+                :src="currentStory.imageUrl"
+                alt="story_image"
+                class="story-image"
+                @load="imageLoaded"
+            >
         </div>
         <button
             class="story-btn next-btn"
@@ -101,6 +105,12 @@ watch(storyIndex, async (storyIndex, prevStoryIndex) => {
         cursor: pointer;
         text-align: center;
         background: gray;
+    }
+
+    .story-image {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
     }
 
     .story-btn {

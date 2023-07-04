@@ -28,7 +28,7 @@ export const getStoryIdList = async () => {
         const response = await ajaxGetStoryIdList()
         const { idList } = response
         if (idList) {
-            state.storyIdList = idList.splice(0, 3)
+            state.storyIdList = idList
         }
     } catch (error) {
         console.error(error)
@@ -59,6 +59,7 @@ export async function fetchStoriesData () {
 export const nextStory = () => {
     if (state.index + 1 === state.storyIdList.length) {
         state.index = 0
+        console.log('state.index', state.index)
         return
     }
     state.index += 1
