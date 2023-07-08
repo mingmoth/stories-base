@@ -6,9 +6,13 @@ import {
     nextStory,
     prevStory
 } from '../store'
+import ProgressItem from './ProgressItem.vue'
 
 // story 顯示相關參數
 const isStoryLoaded = computed(() => Object.keys(currentStory).length > 0)
+const itemNum = computed(() => {
+    return mapState.stories.length
+})
 
 // 播放參數
 const isAutoDisplay = ref(null)
@@ -64,9 +68,27 @@ function imageLoaded () {
             @mousedown="pauseDisplay"
             @mouseup="resumeDisplay"
         >
+            <div
+                class="story-progress"
+                :style="{ '--num': itemNum }"
+            >
+                <ProgressItem
+                    v-for="(story, index) in mapState.stories"
+                    :key="story.id"
+                    :current-display-index="mapState.index"
+                    :story-index="index"
+                    :style="{
+                        background: mapState.index > index ? 'white' : ''
+                    }"
+                    :duration="story.duration"
+                    :remaining-time="remainingTime"
+                    class="story-bar"
+                />
+            </div>
             <div>{{ currentStory.id }}</div>
             <div>{{ currentStory.text }}</div>
             <img
+                v-show="currentStory.imageUrl"
                 :src="currentStory.imageUrl"
                 alt="story_image"
                 class="story-image"
@@ -105,6 +127,8 @@ function imageLoaded () {
         cursor: pointer;
         text-align: center;
         background: gray;
+        padding: 20px;
+        position: relative;
     }
 
     .story-image {
@@ -127,6 +151,24 @@ function imageLoaded () {
 
     .next-btn {
         right: 0;
+    }
+
+    .story-progress {
+        position: absolute;
+        top: 12px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        display: grid;
+        grid-template-columns: repeat(var(--num), 1fr);
+        gap: 4px;
+    }
+
+    .story-bar {
+        width: 100%;
+        height: 2px;
+        background: black;
+        position: relative;
     }
 }
 </style>
