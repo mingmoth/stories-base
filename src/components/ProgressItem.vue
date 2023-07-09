@@ -6,7 +6,8 @@
                 isCurrentStoryIndex && 'active'
             ]"
             :style="{
-                transition: isCurrentStoryIndex ? duration + 'ms linear' : ''
+                transition: isCurrentStoryIndex ? duration + 'ms linear' : '',
+                width: (isCurrentStoryIndex && !isAutoDisplay) ? (isCurrentStoryIndex && isAutoDisplay) ? '100%' : `${displayPercentage}%` : '',
             }"
         ></div>
     </div>
@@ -19,18 +20,23 @@ const props = defineProps({
     currentDisplayIndex: {
         type: Number
     },
-    storyIndex: {
-        type: Number
-    },
     duration: {
         type: Number
     },
+    isAutoDisplay: {
+        type: Number
+    },
     remainingTime: {
+        type: Number
+    },
+    storyIndex: {
         type: Number
     }
 })
 
 const isCurrentStoryIndex = computed(() => props.currentDisplayIndex === props.storyIndex)
+
+const displayPercentage = computed(() => (props.duration - props.remainingTime) / props.duration * 100)
 </script>
 
 <style lang="scss" scoped>
