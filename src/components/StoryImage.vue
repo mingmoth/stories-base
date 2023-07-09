@@ -1,11 +1,16 @@
 <script setup>
-import { computed, ref } from 'vue'
+// vue
+import { computed } from 'vue'
+// store
 import {
     currentStory,
     mapState,
     nextStory,
     prevStory
 } from '../store'
+// hooks
+import { useDisplay } from '../hooks/display'
+// component
 import ProgressItem from './ProgressItem.vue'
 
 // story 顯示相關參數
@@ -14,38 +19,12 @@ const itemNum = computed(() => {
     return mapState.stories.length
 })
 
-// 播放參數
-const isAutoDisplay = ref(null)
-const remainingTime = ref(0)
-const startDisplayTime = ref(new Date())
-
-// 自動播放
-function autoDisplay () {
-    if (isAutoDisplay.value) {
-        clearTimeout(isAutoDisplay.value)
-        isAutoDisplay.value = null
-    }
-    startDisplayTime.value = new Date()
-    isAutoDisplay.value = setTimeout(() => {
-        nextStory()
-    }, remainingTime.value)
-}
-
-// 暫停播放
-function pauseDisplay () {
-    clearTimeout(isAutoDisplay.value)
-    isAutoDisplay.value = null
-    remainingTime.value -= new Date() - startDisplayTime.value
-    console.log('pause, remainingTime', new Date() - startDisplayTime.value)
-}
-
-// 恢復播放
-function resumeDisplay () {
-    console.log('resume, remainingTime', remainingTime.value)
-    isAutoDisplay.value = setTimeout(() => {
-        nextStory()
-    }, remainingTime.value)
-}
+const {
+    remainingTime,
+    autoDisplay,
+    pauseDisplay,
+    resumeDisplay
+} = useDisplay()
 
 function imageLoaded () {
     remainingTime.value = currentStory.value.duration
