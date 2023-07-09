@@ -20,9 +20,10 @@ const itemNum = computed(() => {
 })
 
 const {
-    remainingTime,
     autoDisplay,
+    isAutoDisplay,
     pauseDisplay,
+    remainingTime,
     resumeDisplay
 } = useDisplay()
 
@@ -55,12 +56,13 @@ function imageLoaded () {
                     v-for="(story, index) in mapState.stories"
                     :key="story.id"
                     :current-display-index="mapState.index"
+                    :duration="story.duration"
+                    :is-auto-display="isAutoDisplay"
+                    :remaining-time="remainingTime"
                     :story-index="index"
                     :style="{
                         background: mapState.index > index ? 'white' : ''
                     }"
-                    :duration="story.duration"
-                    :remaining-time="remainingTime"
                     class="story-bar"
                 />
             </div>
