@@ -25,9 +25,6 @@ const props = defineProps({
     isAutoDisplay: {
         type: Boolean
     },
-    remainingTime: {
-        type: Number
-    },
     storyIndex: {
         type: Number
     }
@@ -42,7 +39,7 @@ const startTime = ref(0)
 const lastPauseTime = ref(0)
 const lapseTime = ref(0)
 
-function incrementCount () {
+function displayProgress () {
     if (!startTime.value) {
         startTime.value = new Date()
     }
@@ -50,14 +47,14 @@ function incrementCount () {
     progress.value = (runtime / props.duration) * 100
 
     if (progress.value < 100) {
-        animFrameId.value = requestAnimationFrame(incrementCount)
+        animFrameId.value = requestAnimationFrame(displayProgress)
     } else {
-        cancelCount()
+        pauseProgress()
         progress.value = 100
     }
 }
 
-function cancelCount () {
+function pauseProgress () {
     cancelAnimationFrame(animFrameId.value)
     animFrameId.value = -1
 }
@@ -68,19 +65,19 @@ watch(isCurrentStoryIndex, (val) => {
     lastPauseTime.value = 0
     lapseTime.value = 0
     if (val) {
-        animFrameId.value = requestAnimationFrame(incrementCount)
+        animFrameId.value = requestAnimationFrame(displayProgress)
     } else {
-        cancelCount()
+        pauseProgress()
     }
 })
 
 watch(isAutoDisplay, (val) => {
     if (!val && isCurrentStoryIndex.value) {
-        cancelCount()
+        pauseProgress()
         lastPauseTime.value = new Date()
     } else if (val && isCurrentStoryIndex.value) {
         lapseTime.value = new Date() - lastPauseTime.value
-        animFrameId.value = requestAnimationFrame(incrementCount)
+        animFrameId.value = requestAnimationFrame(displayProgress)
     }
 })
 </script>
