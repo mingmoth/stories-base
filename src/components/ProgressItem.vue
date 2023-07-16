@@ -6,15 +6,14 @@
                 isCurrentStoryIndex && 'active'
             ]"
             :style="{
-                transition: isCurrentStoryIndex ? duration + 'ms linear' : '',
-                width: (isCurrentStoryIndex && !isAutoDisplay) ? (isCurrentStoryIndex && isAutoDisplay) ? '100%' : `${displayPercentage}%` : '',
+                width: `${ progress }%`,
             }"
         ></div>
     </div>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 const props = defineProps({
     currentDisplayIndex: {
@@ -24,7 +23,7 @@ const props = defineProps({
         type: Number
     },
     isAutoDisplay: {
-        type: Number
+        type: Boolean
     },
     remainingTime: {
         type: Number
@@ -35,8 +34,51 @@ const props = defineProps({
 })
 
 const isCurrentStoryIndex = computed(() => props.currentDisplayIndex === props.storyIndex)
+const isAutoDisplay = computed(() => props.isAutoDisplay)
 
-const displayPercentage = computed(() => (props.duration - props.remainingTime) / props.duration * 100)
+const animFrameId = ref(-1)
+const lastPaused = ref(0)
+const progress = ref(0)
+const startTime = ref(0)
+
+function incrementCount () {
+    if (!startTime.value) {
+        startTime.value = new Date()
+    }
+    const runtime = new Date() - startTime.value - lastPaused.value
+    progress.value = (runtime / props.duration) * 100
+
+    if (progress.value < 100) {
+        animFrameId.value = requestAnimationFrame(incrementCount)
+    } else {
+        cancelCount()
+        progress.value = 100
+    }
+}
+
+function cancelCount () {
+    cancelAnimationFrame(animFrameId.value)
+    animFrameId.value = -1
+}
+
+watch(isCurrentStoryIndex, (val) => {
+    progress.value = 0
+    startTime.value = 0
+    if (val) {
+        console.log('currentIndex', props.currentDisplayIndex)
+        animFrameId.value = requestAnimationFrame(incrementCount)
+    } else {
+        cancelCount()
+    }
+})
+
+watch(isAutoDisplay, (val) => {
+    // console.log('val', val)
+    // if (!val) {
+    //     lastPaused.value = new Date() - startTime.value
+    //     cancelCount()
+    // }
+})
 </script>
 
 <style lang="scss" scoped>
