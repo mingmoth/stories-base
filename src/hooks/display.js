@@ -7,6 +7,7 @@ import {
 export const useDisplay = () => {
     // 播放參數
     const isAutoDisplay = ref(null)
+    const isDiplayStory = ref(false)
     const remainingTime = ref(0)
     const startDisplayTime = ref(new Date())
 
@@ -15,8 +16,10 @@ export const useDisplay = () => {
             clearTimeout(isAutoDisplay.value)
             isAutoDisplay.value = null
         }
+        isDiplayStory.value = true
         startDisplayTime.value = new Date()
         isAutoDisplay.value = setTimeout(() => {
+            remainingTime.value = 0
             nextStory()
         }, remainingTime.value)
     }
@@ -24,6 +27,7 @@ export const useDisplay = () => {
     // 暫停播放
     function pauseDisplay () {
         clearTimeout(isAutoDisplay.value)
+        isDiplayStory.value = false
         isAutoDisplay.value = null
         remainingTime.value -= new Date() - startDisplayTime.value
         console.log('pause, remainingTime', new Date() - startDisplayTime.value)
@@ -31,6 +35,7 @@ export const useDisplay = () => {
 
     // 恢復播放
     function resumeDisplay () {
+        isDiplayStory.value = true
         console.log('resume, remainingTime', remainingTime.value)
         isAutoDisplay.value = setTimeout(() => {
             nextStory()
@@ -40,6 +45,7 @@ export const useDisplay = () => {
     return {
         autoDisplay,
         isAutoDisplay,
+        isDiplayStory,
         pauseDisplay,
         resumeDisplay,
         remainingTime,
