@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 // store
 import {
     nextStory
@@ -41,6 +41,10 @@ export const useDisplay = () => {
             nextStory()
         }, remainingTime.value)
     }
+
+    onMounted(() => {
+        isDiplayStory.value = true
+    })
 
     return {
         autoDisplay,
