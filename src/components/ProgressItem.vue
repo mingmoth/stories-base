@@ -37,15 +37,16 @@ const isCurrentStoryIndex = computed(() => props.currentDisplayIndex === props.s
 const isAutoDisplay = computed(() => props.isAutoDisplay)
 
 const animFrameId = ref(-1)
-const lastPaused = ref(0)
 const progress = ref(0)
 const startTime = ref(0)
+const lastPauseTime = ref(0)
+const lapseTime = ref(0)
 
 function incrementCount () {
     if (!startTime.value) {
         startTime.value = new Date()
     }
-    const runtime = new Date() - startTime.value - lastPaused.value
+    const runtime = new Date() - startTime.value - lapseTime.value
     progress.value = (runtime / props.duration) * 100
 
     if (progress.value < 100) {
@@ -64,8 +65,9 @@ function cancelCount () {
 watch(isCurrentStoryIndex, (val) => {
     progress.value = 0
     startTime.value = 0
+    lastPauseTime.value = 0
+    lapseTime.value = 0
     if (val) {
-        console.log('currentIndex', props.currentDisplayIndex)
         animFrameId.value = requestAnimationFrame(incrementCount)
     } else {
         cancelCount()
@@ -73,11 +75,13 @@ watch(isCurrentStoryIndex, (val) => {
 })
 
 watch(isAutoDisplay, (val) => {
-    // console.log('val', val)
-    // if (!val) {
-    //     lastPaused.value = new Date() - startTime.value
-    //     cancelCount()
-    // }
+    if (!val && isCurrentStoryIndex.value) {
+        cancelCount()
+        lastPauseTime.value = new Date()
+    } else if (val && isCurrentStoryIndex.value) {
+        lapseTime.value = new Date() - lastPauseTime.value
+        animFrameId.value = requestAnimationFrame(incrementCount)
+    }
 })
 </script>
 
