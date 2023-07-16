@@ -1,51 +1,31 @@
 <script setup>
-import { computed, ref } from 'vue'
+// vue
+import { computed } from 'vue'
+// store
 import {
     currentStory,
     mapState,
     nextStory,
     prevStory
 } from '../store'
+// hooks
+import { useDisplay } from '../hooks/display'
+// component
 import ProgressItem from './ProgressItem.vue'
+
+const {
+    autoDisplay,
+    isDiplayStory,
+    pauseDisplay,
+    remainingTime,
+    resumeDisplay
+} = useDisplay()
 
 // story 顯示相關參數
 const isStoryLoaded = computed(() => Object.keys(currentStory).length > 0)
 const itemNum = computed(() => {
     return mapState.stories.length
 })
-
-// 播放參數
-const isAutoDisplay = ref(null)
-const remainingTime = ref(0)
-const startDisplayTime = ref(new Date())
-
-// 自動播放
-function autoDisplay () {
-    if (isAutoDisplay.value) {
-        clearTimeout(isAutoDisplay.value)
-        isAutoDisplay.value = null
-    }
-    startDisplayTime.value = new Date()
-    isAutoDisplay.value = setTimeout(() => {
-        nextStory()
-    }, remainingTime.value)
-}
-
-// 暫停播放
-function pauseDisplay () {
-    clearTimeout(isAutoDisplay.value)
-    isAutoDisplay.value = null
-    remainingTime.value -= new Date() - startDisplayTime.value
-    console.log('pause, remainingTime', new Date() - startDisplayTime.value)
-}
-
-// 恢復播放
-function resumeDisplay () {
-    console.log('resume, remainingTime', remainingTime.value)
-    isAutoDisplay.value = setTimeout(() => {
-        nextStory()
-    }, remainingTime.value)
-}
 
 function imageLoaded () {
     remainingTime.value = currentStory.value.duration
@@ -76,12 +56,13 @@ function imageLoaded () {
                     v-for="(story, index) in mapState.stories"
                     :key="story.id"
                     :current-display-index="mapState.index"
+                    :duration="story.duration"
+                    :is-auto-display="isDiplayStory"
+                    :remaining-time="remainingTime"
                     :story-index="index"
                     :style="{
                         background: mapState.index > index ? 'white' : ''
                     }"
-                    :duration="story.duration"
-                    :remaining-time="remainingTime"
                     class="story-bar"
                 />
             </div>

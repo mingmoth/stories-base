@@ -59,11 +59,9 @@ export async function fetchStoriesData () {
 export const nextStory = () => {
     if (state.index + 1 === state.storyIdList.length) {
         state.index = 0
-        console.log('state.index', state.index)
         return
     }
     state.index += 1
-    console.log('state.index', state.index)
 }
 
 export const prevStory = () => {
@@ -71,5 +69,4 @@ export const prevStory = () => {
         return
     }
     state.index -= 1
-    console.log('state.index', state.index)
 }
