@@ -30,14 +30,14 @@ export const useDisplay = () => {
         isDiplayStory.value = false
         isAutoDisplay.value = null
         remainingTime.value -= new Date() - startDisplayTime.value
-        console.log('pause, remainingTime', new Date() - startDisplayTime.value)
     }
 
     // 恢復播放
     function resumeDisplay () {
         isDiplayStory.value = true
-        console.log('resume, remainingTime', remainingTime.value)
+        startDisplayTime.value = new Date()
         isAutoDisplay.value = setTimeout(() => {
+            remainingTime.value = 0
             nextStory()
         }, remainingTime.value)
     }
