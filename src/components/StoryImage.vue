@@ -109,15 +109,18 @@ function imageLoaded () {
         height: 100%;
         cursor: pointer;
         text-align: center;
-        background: gray;
         padding: 20px;
         position: relative;
     }
 
     .story-image {
-        width: 200px;
-        height: 200px;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
+        position: absolute;
+        z-index: 0;
+        top: 0;
+        left: 0;
     }
 
     .story-btn {
@@ -145,6 +148,7 @@ function imageLoaded () {
         display: grid;
         grid-template-columns: repeat(var(--num), 1fr);
         gap: 4px;
+        z-index: 1;
     }
 
     .story-bar {

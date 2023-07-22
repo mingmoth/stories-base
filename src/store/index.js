@@ -59,7 +59,9 @@ export async function fetchStoriesData () {
 export const nextStory = () => {
     state.index += 1
     if (state.index === state.storyIdList.length) {
-        state.index = 0
+        setTimeout(() => {
+            state.index = 0
+        })
     }
 }
 
