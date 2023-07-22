@@ -49,11 +49,11 @@ function imageLoaded () {
             @mousedown="pauseDisplay"
             @mouseup="resumeDisplay"
         >
+            <AvatarImage />
             <div
                 class="story-progress"
                 :style="{ '--num': itemNum }"
             >
-                <AvatarImage />
                 <ProgressItem
                     v-for="(story, index) in mapState.stories"
                     :key="story.id"
