@@ -30,6 +30,7 @@ module.exports = {
     ],
     rules: {
         indent: ['warn', 4],
-        'max-depth': ['warn', 4]
+        'max-depth': ['warn', 4],
+        "eol-last": 0,
     }
 }

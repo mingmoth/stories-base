@@ -10,6 +10,7 @@ import {
 } from '../store'
 // hooks
 import { useDisplay } from '../hooks/display'
+import AvatarImage from './AvatarImage.vue'
 // component
 import ProgressItem from './ProgressItem.vue'
 
@@ -52,6 +53,7 @@ function imageLoaded () {
                 class="story-progress"
                 :style="{ '--num': itemNum }"
             >
+                <AvatarImage />
                 <ProgressItem
                     v-for="(story, index) in mapState.stories"
                     :key="story.id"
