@@ -65,8 +65,10 @@ export const nextStory = () => {
 }
 
 export const prevStory = () => {
-    if (state.index === 0) {
-        return
-    }
     state.index -= 1
+    if (state.index === -1) {
+        setTimeout(() => {
+            state.index = 0
+        })
+    }
 }
