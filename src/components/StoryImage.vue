@@ -12,6 +12,7 @@ import {
 import { useDisplay } from '../hooks/display'
 import AvatarImage from './AvatarImage.vue'
 // component
+import CoverStory from './content/CoverStory.vue'
 import ProgressItem from './ProgressItem.vue'
 
 const {
@@ -68,8 +69,10 @@ function imageLoaded () {
                     class="story-bar"
                 />
             </div>
-            <div>{{ currentStory.id }}</div>
-            <div>{{ currentStory.text }}</div>
+            <CoverStory
+                v-if="currentStory.component === 'CoverStory'"
+                v-bind="currentStory"
+            />
             <img
                 v-show="currentStory.imageUrl"
                 :src="currentStory.imageUrl"
@@ -100,7 +103,6 @@ function imageLoaded () {
     width: 100%;
     height: 100vh;
     position: relative;
-    background: lightgray;
     display: grid;
 
     .story-img {
@@ -111,6 +113,7 @@ function imageLoaded () {
         text-align: center;
         padding: 20px;
         position: relative;
+        background: black;
     }
 
     .story-image {
