@@ -10,8 +10,10 @@ import {
 } from '../store'
 // hooks
 import { useDisplay } from '../hooks/display'
-import AvatarImage from './AvatarImage.vue'
+
 // component
+import AvatarImage from './AvatarImage.vue'
+import AboutStory from './content/AboutStory.vue'
 import CoverStory from './content/CoverStory.vue'
 import ProgressItem from './ProgressItem.vue'
 
@@ -71,6 +73,10 @@ function imageLoaded () {
             </div>
             <CoverStory
                 v-if="currentStory.component === 'CoverStory'"
+                v-bind="currentStory"
+            />
+            <AboutStory
+                v-if="currentStory.component === 'AboutStory'"
                 v-bind="currentStory"
             />
             <img

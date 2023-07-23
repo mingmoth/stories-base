@@ -62,6 +62,7 @@ function getUrlIconPrefix (info) {
 .cover-story {
     position: relative;
     z-index: 2;
+    color: white;
 
     &__info-wrap {
         display: flex;
