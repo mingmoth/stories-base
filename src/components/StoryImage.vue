@@ -13,9 +13,10 @@ import { useDisplay } from '../hooks/display'
 
 // component
 import AvatarImage from './AvatarImage.vue'
+import ProgressItem from './ProgressItem.vue'
 import AboutStory from './content/AboutStory.vue'
 import CoverStory from './content/CoverStory.vue'
-import ProgressItem from './ProgressItem.vue'
+import SkillStory from './content/SkillStory.vue'
 
 const {
     autoDisplay,
@@ -35,7 +36,6 @@ function imageLoaded () {
     remainingTime.value = currentStory.value.duration
     autoDisplay()
 }
-
 </script>
 
 <template>
@@ -77,6 +77,10 @@ function imageLoaded () {
             />
             <AboutStory
                 v-if="currentStory.component === 'AboutStory'"
+                v-bind="currentStory"
+            />
+            <SkillStory
+                v-if="currentStory.component === 'SkillStory'"
                 v-bind="currentStory"
             />
             <img
