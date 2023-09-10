@@ -16,6 +16,11 @@ export default function useDisplay (props) {
     const startTime = ref(0)
     const lastPauseTime = ref(0)
     const lapseTime = ref(0)
+    const isDisplaying = ref(true)
+
+    function updateDisplaying (val) {
+        isDisplaying.value = val
+    }
 
     const isCurrentStoryIndex = computed(() => currentDisplayIndex.value === storyIndex.value)
 
@@ -46,15 +51,30 @@ export default function useDisplay (props) {
         lastPauseTime.value = 0
         lapseTime.value = 0
         if (val && isCurrentStoryIndex.value) {
+            updateDisplaying(true)
             animFrameId.value = requestAnimationFrame(displayProgress)
         } else {
             pauseProgress()
         }
     })
 
+    watch(isDisplaying, (val) => {
+        console.log('watch isDisplaying')
+        if (!val && isCurrentStoryIndex.value) {
+            console.log('pause')
+            pauseProgress()
+            lastPauseTime.value = new Date()
+        } else if (val && isCurrentStoryIndex.value) {
+            console.log('continue')
+            lapseTime.value += new Date() - lastPauseTime.value
+            animFrameId.value = requestAnimationFrame(displayProgress)
+        }
+    })
+
     return {
         isCurrentStoryIndex,
         progress,
-        pauseProgress
+        pauseProgress,
+        updateDisplaying
     }
 }
