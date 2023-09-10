@@ -13,11 +13,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue'
-// store
-import {
-    nextStory
-} from '../store'
+import useDisplay from '../hooks/progress'
 
 const props = defineProps({
     currentDisplayIndex: {
@@ -35,47 +31,11 @@ const props = defineProps({
     }
 })
 
-const animFrameId = ref(-1)
-const progress = ref(0)
-const startTime = ref(0)
-const lastPauseTime = ref(0)
-const lapseTime = ref(0)
+const {
+    isCurrentStoryIndex,
+    progress
+} = useDisplay(props)
 
-const isCurrentStoryIndex = computed(() => props.currentDisplayIndex === props.storyIndex)
-const isCurrentStoryReady = computed(() => props.isCurrentStoryReady)
-
-function displayProgress () {
-    if (!startTime.value) {
-        startTime.value = new Date()
-    }
-    const runtime = new Date() - startTime.value - lapseTime.value
-    progress.value = (runtime / props.duration) * 100
-
-    if (progress.value < 100) {
-        animFrameId.value = requestAnimationFrame(displayProgress)
-    } else {
-        pauseProgress()
-        progress.value = 100
-        nextStory()
-    }
-}
-
-function pauseProgress () {
-    cancelAnimationFrame(animFrameId.value)
-    animFrameId.value = -1
-}
-
-watch(isCurrentStoryReady, (val) => {
-    progress.value = 0
-    startTime.value = 0
-    lastPauseTime.value = 0
-    lapseTime.value = 0
-    if (val && isCurrentStoryIndex.value) {
-        animFrameId.value = requestAnimationFrame(displayProgress)
-    } else {
-        pauseProgress()
-    }
-})
 </script>
 
 <style lang="scss" scoped>
