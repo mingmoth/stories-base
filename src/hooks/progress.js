@@ -1,5 +1,7 @@
 import {
-    nextStory
+    isDisplaying,
+    nextStory,
+    updateDisplaying
 } from '../store'
 import { computed, ref, toRefs, watch } from 'vue'
 
@@ -16,11 +18,6 @@ export default function useDisplay (props) {
     const startTime = ref(0)
     const lastPauseTime = ref(0)
     const lapseTime = ref(0)
-    const isDisplaying = ref(true)
-
-    function updateDisplaying (val) {
-        isDisplaying.value = val
-    }
 
     const isCurrentStoryIndex = computed(() => currentDisplayIndex.value === storyIndex.value)
 
@@ -74,7 +71,6 @@ export default function useDisplay (props) {
     return {
         isCurrentStoryIndex,
         progress,
-        pauseProgress,
-        updateDisplaying
+        pauseProgress
     }
 }

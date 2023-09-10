@@ -7,7 +7,8 @@ import {
     mapState,
     nextStory,
     prevStory,
-    updateCurrentStoryReady
+    updateCurrentStoryReady,
+    updateDisplaying
 } from '../store'
 
 // component
@@ -45,6 +46,8 @@ function imageLoaded () {
         >&lt;</button>
         <div
             class="story-img"
+            @mousedown="updateDisplaying(false)"
+            @mouseup="updateDisplaying(true)"
         >
             <AvatarImage />
             <div

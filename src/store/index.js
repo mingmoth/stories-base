@@ -7,7 +7,8 @@ const state = reactive({
     stories: [],
     index: -1,
     isLoading: true,
-    isCurrentStoryReady: false
+    isCurrentStoryReady: false,
+    isDisplaying: true
 })
 
 export const mapState = readonly(state)
@@ -16,6 +17,8 @@ export const mapState = readonly(state)
 export const currentStory = computed(() => {
     return state.stories[state.index] || {}
 })
+
+export const isDisplaying = computed(() => state.isDisplaying)
 
 // action
 // 取得 StoryIdList
@@ -83,6 +86,10 @@ export const prevStory = () => {
     } else {
         isNeedCheckImageLoad(1)
     }
+}
+
+export function updateDisplaying (val) {
+    state.isDisplaying = val
 }
 
 async function isNeedCheckImageLoad (idx) {
