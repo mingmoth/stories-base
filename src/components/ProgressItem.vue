@@ -76,16 +76,6 @@ watch(isCurrentStoryReady, (val) => {
         pauseProgress()
     }
 })
-
-// watch(isAutoDisplay, (val) => {
-//     if (!val && isCurrentStoryIndex.value) {
-//         pauseProgress()
-//         lastPauseTime.value = new Date()
-//     } else if (val && isCurrentStoryIndex.value) {
-//         lapseTime.value += new Date() - lastPauseTime.value
-//         animFrameId.value = requestAnimationFrame(displayProgress)
-//     }
-// })
 </script>
 
 <style lang="scss" scoped>
