@@ -8,8 +8,6 @@ import {
     nextStory,
     prevStory
 } from '../store'
-// hooks
-// import { useDisplay } from '../hooks/display'
 
 // component
 import AvatarImage from './AvatarImage.vue'

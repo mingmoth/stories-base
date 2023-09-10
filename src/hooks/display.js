@@ -11,15 +11,6 @@ export const useDisplay = (props) => {
     const remainingTime = ref(0)
     const startDisplayTime = ref(new Date())
 
-    // progress
-    // const isCurrentStoryIndex = computed(() => props.currentDisplayIndex === props.storyIndex)
-
-    // const animFrameId = ref(-1) // same as isAutoDisplay
-    const progress = ref(0)
-    const startTime = ref(0)
-    // const lastPauseTime = ref(0)
-    const lapseTime = ref(0)
-
     function autoDisplay () {
         if (!startTime.value) {
             startTime.value = new Date()

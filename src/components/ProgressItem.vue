@@ -34,14 +34,13 @@ const props = defineProps({
     }
 })
 
-const isCurrentStoryIndex = computed(() => props.currentDisplayIndex === props.storyIndex)
-// const isAutoDisplay = computed(() => props.isAutoDisplay)
-
 const animFrameId = ref(-1)
 const progress = ref(0)
 const startTime = ref(0)
 const lastPauseTime = ref(0)
 const lapseTime = ref(0)
+
+const isCurrentStoryIndex = computed(() => props.currentDisplayIndex === props.storyIndex)
 
 function displayProgress () {
     if (!startTime.value) {
