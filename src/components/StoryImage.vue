@@ -20,7 +20,7 @@ import SkillStory from './content/SkillStory.vue'
 
 const {
     autoDisplay,
-    isDiplayStory,
+    isDisplayStory,
     pauseDisplay,
     remainingTime,
     resumeDisplay
@@ -62,7 +62,7 @@ function imageLoaded () {
                     :key="story.id"
                     :current-display-index="mapState.index"
                     :duration="story.duration"
-                    :is-auto-display="isDiplayStory"
+                    :is-auto-display="isDisplayStory"
                     :remaining-time="remainingTime"
                     :story-index="index"
                     :style="{
