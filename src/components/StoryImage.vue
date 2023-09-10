@@ -1,36 +1,36 @@
 <script setup>
 // vue
-import { computed } from 'vue'
+import { computed, nextTick } from 'vue'
 // store
 import {
     currentStory,
     mapState,
     nextStory,
-    prevStory
+    prevStory,
+    updateCurrentStoryReady,
+    updateDisplaying
 } from '../store'
-// hooks
-import { useDisplay } from '../hooks/display'
-import AvatarImage from './AvatarImage.vue'
-// component
-import ProgressItem from './ProgressItem.vue'
 
-const {
-    autoDisplay,
-    isDiplayStory,
-    pauseDisplay,
-    remainingTime,
-    resumeDisplay
-} = useDisplay()
+// component
+import AvatarImage from './AvatarImage.vue'
+import ProgressItem from './ProgressItem.vue'
+import AboutStory from './content/AboutStory.vue'
+import CoverStory from './content/CoverStory.vue'
+import SkillStory from './content/SkillStory.vue'
 
 // story 顯示相關參數
 const isStoryLoaded = computed(() => Object.keys(currentStory).length > 0)
 const itemNum = computed(() => {
     return mapState.stories.length
 })
+const isCurrentStoryReady = computed(() => mapState.isCurrentStoryReady)
 
 function imageLoaded () {
-    remainingTime.value = currentStory.value.duration
-    autoDisplay()
+    console.log('imageLoaded')
+    updateCurrentStoryReady(false)
+    nextTick(() => {
+        updateCurrentStoryReady(true)
+    })
 }
 
 </script>
@@ -46,21 +46,20 @@ function imageLoaded () {
         >&lt;</button>
         <div
             class="story-img"
-            @mousedown="pauseDisplay"
-            @mouseup="resumeDisplay"
+            @mousedown="updateDisplaying(false)"
+            @mouseup="updateDisplaying(true)"
         >
+            <AvatarImage />
             <div
                 class="story-progress"
                 :style="{ '--num': itemNum }"
             >
-                <AvatarImage />
                 <ProgressItem
                     v-for="(story, index) in mapState.stories"
                     :key="story.id"
                     :current-display-index="mapState.index"
                     :duration="story.duration"
-                    :is-auto-display="isDiplayStory"
-                    :remaining-time="remainingTime"
+                    :is-current-story-ready="isCurrentStoryReady"
                     :story-index="index"
                     :style="{
                         background: mapState.index > index ? 'white' : ''
@@ -68,8 +67,18 @@ function imageLoaded () {
                     class="story-bar"
                 />
             </div>
-            <div>{{ currentStory.id }}</div>
-            <div>{{ currentStory.text }}</div>
+            <CoverStory
+                v-if="currentStory.component === 'CoverStory'"
+                v-bind="currentStory"
+            />
+            <AboutStory
+                v-if="currentStory.component === 'AboutStory'"
+                v-bind="currentStory"
+            />
+            <SkillStory
+                v-if="currentStory.component === 'SkillStory'"
+                v-bind="currentStory"
+            />
             <img
                 v-show="currentStory.imageUrl"
                 :src="currentStory.imageUrl"
@@ -100,7 +109,6 @@ function imageLoaded () {
     width: 100%;
     height: 100vh;
     position: relative;
-    background: lightgray;
     display: grid;
 
     .story-img {
@@ -109,15 +117,19 @@ function imageLoaded () {
         height: 100%;
         cursor: pointer;
         text-align: center;
-        background: gray;
         padding: 20px;
         position: relative;
+        background: black;
     }
 
     .story-image {
-        width: 200px;
-        height: 200px;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
+        position: absolute;
+        z-index: 0;
+        top: 0;
+        left: 0;
     }
 
     .story-btn {
@@ -145,6 +157,7 @@ function imageLoaded () {
         display: grid;
         grid-template-columns: repeat(var(--num), 1fr);
         gap: 4px;
+        z-index: 1;
     }
 
     .story-bar {

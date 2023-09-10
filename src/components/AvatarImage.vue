@@ -1,6 +1,6 @@
 <template>
     <img
-        src="../../public/avatar.png"
+        src="/avatar.png"
         alt="avatar"
         class="avatar"
     >
@@ -9,7 +9,8 @@
 <style lang="scss" scoped>
 .avatar {
     position: absolute;
-    top: 16px;
+    z-index: 1;
+    top: 24px;
     left: 16px;
     width: 48px;
     height: 48px;
