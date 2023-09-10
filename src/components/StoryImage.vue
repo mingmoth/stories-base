@@ -57,7 +57,6 @@ function imageLoaded () {
                     :current-display-index="mapState.index"
                     :duration="story.duration"
                     :is-current-story-ready="isCurrentStoryReady"
-                    :remaining-time="currentStory.duration"
                     :story-index="index"
                     :style="{
                         background: mapState.index > index ? 'white' : ''
