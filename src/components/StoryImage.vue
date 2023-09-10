@@ -9,7 +9,7 @@ import {
     prevStory
 } from '../store'
 // hooks
-import { useDisplay } from '../hooks/display'
+// import { useDisplay } from '../hooks/display'
 
 // component
 import AvatarImage from './AvatarImage.vue'
@@ -18,24 +18,12 @@ import AboutStory from './content/AboutStory.vue'
 import CoverStory from './content/CoverStory.vue'
 import SkillStory from './content/SkillStory.vue'
 
-const {
-    autoDisplay,
-    isDisplayStory,
-    pauseDisplay,
-    remainingTime,
-    resumeDisplay
-} = useDisplay()
-
 // story 顯示相關參數
 const isStoryLoaded = computed(() => Object.keys(currentStory).length > 0)
 const itemNum = computed(() => {
     return mapState.stories.length
 })
 
-function imageLoaded () {
-    remainingTime.value = currentStory.value.duration
-    autoDisplay()
-}
 </script>
 
 <template>
@@ -49,8 +37,6 @@ function imageLoaded () {
         >&lt;</button>
         <div
             class="story-img"
-            @mousedown="pauseDisplay"
-            @mouseup="resumeDisplay"
         >
             <AvatarImage />
             <div
@@ -62,8 +48,7 @@ function imageLoaded () {
                     :key="story.id"
                     :current-display-index="mapState.index"
                     :duration="story.duration"
-                    :is-auto-display="isDisplayStory"
-                    :remaining-time="remainingTime"
+                    :remaining-time="currentStory.duration"
                     :story-index="index"
                     :style="{
                         background: mapState.index > index ? 'white' : ''

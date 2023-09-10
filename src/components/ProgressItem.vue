@@ -14,6 +14,10 @@
 
 <script setup>
 import { computed, ref, watch } from 'vue'
+// store
+import {
+    nextStory
+} from '../store'
 
 const props = defineProps({
     currentDisplayIndex: {
@@ -22,16 +26,16 @@ const props = defineProps({
     duration: {
         type: Number
     },
-    isAutoDisplay: {
-        type: Boolean
-    },
+    // isAutoDisplay: {
+    //     type: Boolean
+    // },
     storyIndex: {
         type: Number
     }
 })
 
 const isCurrentStoryIndex = computed(() => props.currentDisplayIndex === props.storyIndex)
-const isAutoDisplay = computed(() => props.isAutoDisplay)
+// const isAutoDisplay = computed(() => props.isAutoDisplay)
 
 const animFrameId = ref(-1)
 const progress = ref(0)
@@ -51,6 +55,7 @@ function displayProgress () {
     } else {
         pauseProgress()
         progress.value = 100
+        nextStory()
     }
 }
 
@@ -71,15 +76,15 @@ watch(isCurrentStoryIndex, (val) => {
     }
 })
 
-watch(isAutoDisplay, (val) => {
-    if (!val && isCurrentStoryIndex.value) {
-        pauseProgress()
-        lastPauseTime.value = new Date()
-    } else if (val && isCurrentStoryIndex.value) {
-        lapseTime.value += new Date() - lastPauseTime.value
-        animFrameId.value = requestAnimationFrame(displayProgress)
-    }
-})
+// watch(isAutoDisplay, (val) => {
+//     if (!val && isCurrentStoryIndex.value) {
+//         pauseProgress()
+//         lastPauseTime.value = new Date()
+//     } else if (val && isCurrentStoryIndex.value) {
+//         lapseTime.value += new Date() - lastPauseTime.value
+//         animFrameId.value = requestAnimationFrame(displayProgress)
+//     }
+// })
 </script>
 
 <style lang="scss" scoped>
