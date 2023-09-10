@@ -1,12 +1,13 @@
 <script setup>
 // vue
-import { computed } from 'vue'
+import { computed, nextTick } from 'vue'
 // store
 import {
     currentStory,
     mapState,
     nextStory,
-    prevStory
+    prevStory,
+    updateCurrentStoryReady
 } from '../store'
 
 // component
@@ -21,6 +22,15 @@ const isStoryLoaded = computed(() => Object.keys(currentStory).length > 0)
 const itemNum = computed(() => {
     return mapState.stories.length
 })
+const isCurrentStoryReady = computed(() => mapState.isCurrentStoryReady)
+
+function imageLoaded () {
+    console.log('imageLoaded')
+    updateCurrentStoryReady(false)
+    nextTick(() => {
+        updateCurrentStoryReady(true)
+    })
+}
 
 </script>
 
@@ -46,6 +56,7 @@ const itemNum = computed(() => {
                     :key="story.id"
                     :current-display-index="mapState.index"
                     :duration="story.duration"
+                    :is-current-story-ready="isCurrentStoryReady"
                     :remaining-time="currentStory.duration"
                     :story-index="index"
                     :style="{

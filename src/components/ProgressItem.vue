@@ -26,9 +26,10 @@ const props = defineProps({
     duration: {
         type: Number
     },
-    // isAutoDisplay: {
-    //     type: Boolean
-    // },
+    isCurrentStoryReady: {
+        type: Boolean,
+        default: false
+    },
     storyIndex: {
         type: Number
     }
@@ -41,6 +42,7 @@ const lastPauseTime = ref(0)
 const lapseTime = ref(0)
 
 const isCurrentStoryIndex = computed(() => props.currentDisplayIndex === props.storyIndex)
+const isCurrentStoryReady = computed(() => props.isCurrentStoryReady)
 
 function displayProgress () {
     if (!startTime.value) {
@@ -63,12 +65,12 @@ function pauseProgress () {
     animFrameId.value = -1
 }
 
-watch(isCurrentStoryIndex, (val) => {
+watch(isCurrentStoryReady, (val) => {
     progress.value = 0
     startTime.value = 0
     lastPauseTime.value = 0
     lapseTime.value = 0
-    if (val) {
+    if (val && isCurrentStoryIndex.value) {
         animFrameId.value = requestAnimationFrame(displayProgress)
     } else {
         pauseProgress()
