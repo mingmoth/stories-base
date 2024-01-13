@@ -1,4 +1,4 @@
-import { computed, reactive, readonly } from 'vue'
+import { computed, nextTick, reactive, readonly } from 'vue'
 import { ajaxGetStoryIdList, ajaxGetStory } from '../api'
 
 // state
@@ -6,7 +6,9 @@ const state = reactive({
     storyIdList: [],
     stories: [],
     index: -1,
-    isLoading: true
+    isLoading: true,
+    isCurrentStoryReady: false,
+    isDisplaying: true
 })
 
 export const mapState = readonly(state)
@@ -15,6 +17,8 @@ export const mapState = readonly(state)
 export const currentStory = computed(() => {
     return state.stories[state.index] || {}
 })
+
+export const isDisplaying = computed(() => state.isDisplaying)
 
 // action
 // 取得 StoryIdList
@@ -56,19 +60,51 @@ export async function fetchStoriesData () {
     state.index = 0
 }
 
+export const isStoryImageSameAsPrev = (idx) => {
+    return state.stories[state.index].imageUrl === state.stories[state.index + idx].imageUrl
+}
+
 export const nextStory = () => {
-    if (state.index + 1 === state.storyIdList.length) {
-        state.index = 0
-        return
-    }
     state.index += 1
+    if (state.index === state.storyIdList.length) {
+        updateCurrentStoryReady(false)
+        setTimeout(() => {
+            state.index = 0
+        })
+    } else {
+        isNeedCheckImageLoad(-1)
+    }
 }
 
 export const prevStory = () => {
     state.index -= 1
     if (state.index === -1) {
+        updateCurrentStoryReady(false)
         setTimeout(() => {
             state.index = 0
         })
+    } else {
+        isNeedCheckImageLoad(1)
     }
+}
+
+export function updateDisplaying (val) {
+    state.isDisplaying = val
+}
+
+async function isNeedCheckImageLoad (idx) {
+    updateCurrentStoryReady(false)
+    await nextTick(() => {
+        if (isStoryImageSameAsPrev(idx)) {
+            console.log('isStoryImageSameAsPrev', idx)
+            updateCurrentStoryReady(false)
+            nextTick(() => {
+                updateCurrentStoryReady(true)
+            })
+        }
+    })
+}
+
+export const updateCurrentStoryReady = (val) => {
+    state.isCurrentStoryReady = val
 }

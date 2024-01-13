@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import { getStoryIdList, fetchStoriesData } from './store'
-import StoryImage from './components/StoryImage.vue'
+import StoryContainer from './components/StoryContainer.vue'
 
 onMounted(async () => {
     await getStoryIdList()
@@ -11,7 +11,7 @@ onMounted(async () => {
 
 <template>
   <div>
-    <StoryImage />
+    <StoryContainer />
   </div>
 </template>
 
