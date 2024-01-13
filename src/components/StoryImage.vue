@@ -40,6 +40,23 @@ function imageLoaded () {
         v-if="!mapState.isLoading && isStoryLoaded"
         class="story-container"
     >
+        <div
+            class="story-progress"
+            :style="{ '--num': itemNum }"
+        >
+            <ProgressItem
+                v-for="(story, index) in mapState.stories"
+                :key="story.id"
+                :current-display-index="mapState.index"
+                :duration="story.duration"
+                :is-current-story-ready="isCurrentStoryReady"
+                :story-index="index"
+                :style="{
+                    background: mapState.index > index ? 'white' : ''
+                }"
+                class="story-bar"
+            />
+        </div>
         <button
             class="story-btn prev-btn"
             @click="prevStory"
@@ -50,23 +67,6 @@ function imageLoaded () {
             @mouseup="updateDisplaying(true)"
         >
             <AvatarImage />
-            <div
-                class="story-progress"
-                :style="{ '--num': itemNum }"
-            >
-                <ProgressItem
-                    v-for="(story, index) in mapState.stories"
-                    :key="story.id"
-                    :current-display-index="mapState.index"
-                    :duration="story.duration"
-                    :is-current-story-ready="isCurrentStoryReady"
-                    :story-index="index"
-                    :style="{
-                        background: mapState.index > index ? 'white' : ''
-                    }"
-                    class="story-bar"
-                />
-            </div>
             <CoverStory
                 v-if="currentStory.component === 'CoverStory'"
                 v-bind="currentStory"
@@ -151,8 +151,9 @@ function imageLoaded () {
     .story-progress {
         position: absolute;
         top: 12px;
-        left: 0;
-        width: 100%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 500px;
         height: 2px;
         display: grid;
         grid-template-columns: repeat(var(--num), 1fr);
