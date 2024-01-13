@@ -1,22 +1,17 @@
 <script setup>
 // vue
-import { computed, nextTick } from 'vue'
+import { computed } from 'vue'
 // store
 import {
     currentStory,
     mapState,
     nextStory,
-    prevStory,
-    updateCurrentStoryReady,
-    updateDisplaying
+    prevStory
 } from '../store'
 
 // component
-import AvatarImage from './AvatarImage.vue'
 import ProgressItem from './ProgressItem.vue'
-import AboutStory from './content/AboutStory.vue'
-import CoverStory from './content/CoverStory.vue'
-import SkillStory from './content/SkillStory.vue'
+import StoryImage from './StoryImage.vue'
 
 // story 顯示相關參數
 const isStoryLoaded = computed(() => Object.keys(currentStory).length > 0)
@@ -24,15 +19,6 @@ const itemNum = computed(() => {
     return mapState.stories.length
 })
 const isCurrentStoryReady = computed(() => mapState.isCurrentStoryReady)
-
-function imageLoaded () {
-    console.log('imageLoaded')
-    updateCurrentStoryReady(false)
-    nextTick(() => {
-        updateCurrentStoryReady(true)
-    })
-}
-
 </script>
 
 <template>
@@ -61,32 +47,7 @@ function imageLoaded () {
             class="story-btn prev-btn"
             @click="prevStory"
         >&lt;</button>
-        <div
-            class="story-img"
-            @mousedown="updateDisplaying(false)"
-            @mouseup="updateDisplaying(true)"
-        >
-            <AvatarImage />
-            <CoverStory
-                v-if="currentStory.component === 'CoverStory'"
-                v-bind="currentStory"
-            />
-            <AboutStory
-                v-if="currentStory.component === 'AboutStory'"
-                v-bind="currentStory"
-            />
-            <SkillStory
-                v-if="currentStory.component === 'SkillStory'"
-                v-bind="currentStory"
-            />
-            <img
-                v-show="currentStory.imageUrl"
-                :src="currentStory.imageUrl"
-                alt="story_image"
-                class="story-image"
-                @load="imageLoaded"
-            >
-        </div>
+        <StoryImage class="story-image" />
         <button
             class="story-btn next-btn"
             @click="nextStory"
@@ -97,7 +58,7 @@ function imageLoaded () {
         class="story-container"
     >
     <div
-            class="story-img"
+            class="story-image"
         >
             Loading...
         </div>
@@ -111,7 +72,7 @@ function imageLoaded () {
     position: relative;
     display: grid;
 
-    .story-img {
+    .story-image {
         margin: auto;
         width: 500px;
         height: 100%;
@@ -120,16 +81,6 @@ function imageLoaded () {
         padding: 20px;
         position: relative;
         background: black;
-    }
-
-    .story-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        position: absolute;
-        z-index: 0;
-        top: 0;
-        left: 0;
     }
 
     .story-btn {
