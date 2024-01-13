@@ -28,7 +28,6 @@ const isCurrentStoryReady = computed(() => mapState.isCurrentStoryReady)
     >
         <div
             class="story-progress"
-            :style="{ '--num': itemNum }"
         >
             <ProgressItem
                 v-for="(story, index) in mapState.stories"
@@ -37,10 +36,10 @@ const isCurrentStoryReady = computed(() => mapState.isCurrentStoryReady)
                 :duration="story.duration"
                 :is-current-story-ready="isCurrentStoryReady"
                 :story-index="index"
-                :style="{
-                    background: mapState.index > index ? 'white' : ''
-                }"
-                class="story-bar"
+                :class="[
+                    'story-progress__item',
+                    mapState.index > index && 'story-progress__item--displayed',
+                ]"
             />
         </div>
         <button
@@ -107,16 +106,20 @@ const isCurrentStoryReady = computed(() => mapState.isCurrentStoryReady)
         width: 500px;
         height: 2px;
         display: grid;
-        grid-template-columns: repeat(var(--num), 1fr);
+        grid-template-columns: v-bind('`repeat(${itemNum}, 1fr)`');
         gap: 4px;
         z-index: 1;
-    }
 
-    .story-bar {
-        width: 100%;
-        height: 2px;
-        background: black;
-        position: relative;
+        &__item {
+            width: 100%;
+            height: 2px;
+            background: black;
+            position: relative;
+
+            &--displayed {
+                background: white;
+            }
+        }
     }
 }
 </style>
