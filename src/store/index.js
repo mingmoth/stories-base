@@ -20,6 +20,8 @@ export const currentStory = computed(() => {
 
 export const isDisplaying = computed(() => state.isDisplaying)
 
+export const isCurrentStoryReady = computed(() => state.isCurrentStoryReady)
+
 // action
 // 取得 StoryIdList
 export const getStoryIdList = async () => {
