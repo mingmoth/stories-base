@@ -20,53 +20,34 @@ const isStoryLoaded = computed(() => Object.keys(currentStory).length > 0)
 
 <template>
     <div
-        v-if="!mapState.isLoading && isStoryLoaded"
         class="story-container"
     >
-        <StoryProgress />
         <button
             class="story-btn prev-btn"
             @click="prevStory"
         >&lt;</button>
-        <StoryImage class="story-image" />
+        <StoryImage
+            v-if="!mapState.isLoading && isStoryLoaded"
+            class="story-image"
+        />
         <button
             class="story-btn next-btn"
             @click="nextStory"
         >></button>
-    </div>
-    <div
-        v-else
-        class="story-container"
-    >
-        <div
-            class="story-image"
-        >
-            Loading...
-        </div>
+        <StoryProgress />
     </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .story-container {
     width: 100%;
     height: 100vh;
     position: relative;
     display: grid;
 
-    .story-image {
-        margin: auto;
-        width: 500px;
-        height: 100%;
-        cursor: pointer;
-        text-align: center;
-        padding: 20px;
-        position: relative;
-        background: black;
-    }
-
     .story-btn {
         border: none;
-        position: absolute;
+        position: fixed;
         top: 50%;
         transform: translate(0, -50%);
         z-index: 2;
