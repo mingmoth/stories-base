@@ -4,6 +4,7 @@ import { nextTick } from 'vue'
 // store
 import {
     currentStory,
+    isCurrentStoryReady,
     updateCurrentStoryReady,
     updateDisplaying
 } from '../store'
@@ -12,6 +13,7 @@ import {
 import AvatarImage from './AvatarImage.vue'
 import AboutStory from './content/AboutStory.vue'
 import CoverStory from './content/CoverStory.vue'
+import LoadSpinner from './common/LoadSpinner.vue'
 import SkillStory from './content/SkillStory.vue'
 
 function imageLoaded () {
@@ -27,7 +29,10 @@ function imageLoaded () {
 <template>
     <div
         @mousedown="updateDisplaying(false)"
-        @mouseup="updateDisplaying(true)">
+        @mouseup="updateDisplaying(true)"
+        class="story-image"
+    >
+        <LoadSpinner v-if="!isCurrentStoryReady" />
         <AvatarImage />
         <CoverStory
             v-if="currentStory.component === 'CoverStory'"
@@ -54,6 +59,14 @@ function imageLoaded () {
 <style lang="scss" scoped>
 
 .story-image {
+    margin: auto;
+    width: 500px;
+    height: 100%;
+    cursor: pointer;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    background: black;
 
     &__img {
         width: 100%;
