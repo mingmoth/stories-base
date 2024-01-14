@@ -48,7 +48,7 @@ const props = defineProps({
 
 .about-story {
     position: relative;
-    z-index: 2;
+    z-index: 1;
     color: white;
 
     &__info-wrap {
