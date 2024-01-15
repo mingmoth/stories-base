@@ -32,7 +32,6 @@ function imageLoaded () {
         @mouseup="updateDisplaying(true)"
         class="story-image"
     >
-        <LoadSpinner v-if="!isCurrentStoryReady" />
         <AvatarImage />
         <CoverStory
             v-if="currentStory.component === 'CoverStory'"
@@ -53,6 +52,12 @@ function imageLoaded () {
             class="story-image__img"
             @load="imageLoaded"
         >
+        <div
+            v-if="!isCurrentStoryReady"
+            class="loading-container"
+        >
+            <LoadSpinner />
+        </div>
     </div>
 </template>
 
@@ -77,5 +82,16 @@ function imageLoaded () {
         top: 0;
         left: 0;
     }
+}
+
+.loading-container {
+    height: 100%;
+    width: 100%;
+    background: black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: grid;
 }
 </style>

@@ -1,21 +1,8 @@
 <template>
-    <div class="loading-container">
-        <div class="loading"></div>
-    </div>
+        <div class="loading" />
 </template>
 
 <style lang="scss" scoped>
-.loading-container {
-    height: 100%;
-    width: 100%;
-    background: black;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    display: grid;
-}
-
 .loading {
     border: 5px solid #f3f3f3;
     border-top: 5px solid #555;
