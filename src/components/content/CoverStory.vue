@@ -27,7 +27,7 @@
                     target="_blank"
                 >
                     <img
-                        :src="`/contact/${ info.icon }.png`"
+                        :src="`/src/assets/contact/${ info.icon }.png`"
                         :alt="`contact-${ info.icon }-icon`"
                         class="cover-story__icon"
                     >
