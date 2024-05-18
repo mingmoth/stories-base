@@ -61,7 +61,7 @@ const validInfoList = computed(() => props.infos.filter(info => info.skills.leng
 
 .skill-story {
     position: relative;
-    z-index: 2;
+    z-index: 1;
     color: white;
 
     &__info-wrap {

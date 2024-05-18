@@ -3,6 +3,7 @@
 import { computed } from 'vue'
 // store
 import {
+    isCurrentStoryReady,
     mapState
 } from '../store'
 
@@ -13,7 +14,6 @@ import ProgressItem from './ProgressItem.vue'
 const itemNum = computed(() => {
     return mapState.stories.length
 })
-const isCurrentStoryReady = computed(() => mapState.isCurrentStoryReady)
 </script>
 
 <template>
@@ -39,12 +39,12 @@ const isCurrentStoryReady = computed(() => mapState.isCurrentStoryReady)
     top: 12px;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 500px;
+    width: 100%;
     height: 2px;
     display: grid;
     grid-template-columns: v-bind('`repeat(${itemNum}, 1fr)`');
     gap: 4px;
-    z-index: 1;
+    z-index: 2;
 
     &__item {
         width: 100%;
@@ -55,6 +55,12 @@ const isCurrentStoryReady = computed(() => mapState.isCurrentStoryReady)
         &--displayed {
             background: white;
         }
+    }
+}
+
+@media (min-width: 500px) {
+    .story-progress {
+        width: 500px;
     }
 }
 </style>

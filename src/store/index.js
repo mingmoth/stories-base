@@ -20,6 +20,8 @@ export const currentStory = computed(() => {
 
 export const isDisplaying = computed(() => state.isDisplaying)
 
+export const isCurrentStoryReady = computed(() => state.isCurrentStoryReady)
+
 // action
 // 取得 StoryIdList
 export const getStoryIdList = async () => {
@@ -36,8 +38,9 @@ export const getStoryIdList = async () => {
         }
     } catch (error) {
         console.error(error)
+    } finally {
+        state.isLoading = false
     }
-    state.isLoading = false
 }
 
 // 取得 全部Stories
