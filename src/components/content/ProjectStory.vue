@@ -31,7 +31,7 @@
                         class="project-story__link"
                     >
                         <img
-                            src="/contact/github.png"
+                            src="/src/assets/contact/github.png"
                             class="project-story__icon"
                         >
                     </a>

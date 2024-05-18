@@ -27,10 +27,23 @@
                     target="_blank"
                 >
                     <img
-                        :src="`/contact/${ info.icon }.png`"
+                        v-if="info.icon === 'email'"
+                        src="/src/assets/contact/email.png"
                         :alt="`contact-${ info.icon }-icon`"
                         class="cover-story__icon"
-                    >
+                    />
+                    <img
+                        v-else-if="info.icon === 'github'"
+                        src="/src/assets/contact/github.png"
+                        :alt="`contact-${ info.icon }-icon`"
+                        class="cover-story__icon"
+                    />
+                    <img
+                        v-else-if="info.icon === 'linkedin'"
+                        src="/src/assets/contact/linkedin.png"
+                        :alt="`contact-${ info.icon }-icon`"
+                        class="cover-story__icon"
+                    />
                 </a>
             </div>
         </div>
@@ -94,6 +107,7 @@ function getUrlIconPrefix (info) {
     }
 
     &__intro-wrap {
+        margin-top: 12px;
         text-align: start;
         padding: 0 5%;
         font-size: 18px;

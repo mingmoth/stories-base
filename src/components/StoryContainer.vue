@@ -25,7 +25,9 @@ const isStoryLoaded = computed(() => Object.keys(currentStory).length > 0)
         <button
             class="story-btn prev-btn"
             @click="prevStory"
-        ></button>
+        >
+            <img src="/src/assets/arrow.png" alt="prev-arrow" class="prev-icon">
+        </button>
         <StoryImage
             v-if="!mapState.isLoading && isStoryLoaded"
             class="story-image"
@@ -33,7 +35,9 @@ const isStoryLoaded = computed(() => Object.keys(currentStory).length > 0)
         <button
             class="story-btn next-btn"
             @click="nextStory"
-        ></button>
+        >
+            <img src="/src/assets/arrow.png" alt="next-arrow" class="next-icon">
+        </button>
         <StoryProgress />
     </div>
 </template>
@@ -46,15 +50,19 @@ const isStoryLoaded = computed(() => Object.keys(currentStory).length > 0)
     display: grid;
 
     .story-btn {
-        border: none;
         position: fixed;
-        top: 0;
-        width: 50vw;
-        height: 100vh;
+        top: 50vh;
+        width: 40px;
+        height: 40px;
         z-index: 2;
         border: none;
         outline: none;
         background-color: transparent;
+        display: grid;
+        border-radius: 50%;
+        background-color: lightgray;
+        opacity: 0.5;
+        cursor: pointer;
     }
 
     .prev-btn {
@@ -63,6 +71,17 @@ const isStoryLoaded = computed(() => Object.keys(currentStory).length > 0)
 
     .next-btn {
         right: 0;
+    }
+
+    .prev-icon {
+        margin: auto;
+        transform: rotate(180deg);
+        width: 20px;
+    }
+
+    .next-icon {
+        margin: auto;
+        width: 20px;
     }
 }
 </style>
