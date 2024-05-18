@@ -38,8 +38,9 @@ export const getStoryIdList = async () => {
         }
     } catch (error) {
         console.error(error)
+    } finally {
+        state.isLoading = false
     }
-    state.isLoading = false
 }
 
 // 取得 全部Stories
