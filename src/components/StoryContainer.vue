@@ -48,9 +48,14 @@ const isStoryLoaded = computed(() => Object.keys(currentStory).length > 0)
     .story-btn {
         border: none;
         position: fixed;
-        top: 50%;
+        top: 0;
+        width: 50vw;
+        height: 100vh;
         transform: translate(0, -50%);
         z-index: 2;
+        border: none;
+        outline: none;
+        background-color: transparent;
     }
 
     .prev-btn {

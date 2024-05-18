@@ -100,8 +100,8 @@ function imageLoaded () {
 }
 
 .loading-container {
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     background: black;
     position: absolute;
     top: 0;

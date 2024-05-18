@@ -54,7 +54,7 @@ const props = defineProps({
     &__info-wrap {
         text-align: start;
         padding: 0 5%;
-        font-size: 18px;
+        font-size: 16px;
         line-height: 30px;
         font-weight: 600;
     }
