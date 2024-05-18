@@ -25,7 +25,7 @@ const isStoryLoaded = computed(() => Object.keys(currentStory).length > 0)
         <button
             class="story-btn prev-btn"
             @click="prevStory"
-        >&lt;</button>
+        ></button>
         <StoryImage
             v-if="!mapState.isLoading && isStoryLoaded"
             class="story-image"
@@ -33,7 +33,7 @@ const isStoryLoaded = computed(() => Object.keys(currentStory).length > 0)
         <button
             class="story-btn next-btn"
             @click="nextStory"
-        >></button>
+        ></button>
         <StoryProgress />
     </div>
 </template>
@@ -51,7 +51,6 @@ const isStoryLoaded = computed(() => Object.keys(currentStory).length > 0)
         top: 0;
         width: 50vw;
         height: 100vh;
-        transform: translate(0, -50%);
         z-index: 2;
         border: none;
         outline: none;
