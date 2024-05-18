@@ -13,8 +13,10 @@ import {
 import AvatarImage from './AvatarImage.vue'
 import AboutStory from './content/AboutStory.vue'
 import CoverStory from './content/CoverStory.vue'
+import ContactStory from './content/ContactStory.vue'
 import LoadSpinner from './common/LoadSpinner.vue'
 import SkillStory from './content/SkillStory.vue'
+import ProjectStory from './content/ProjectStory.vue'
 
 function imageLoaded () {
     console.log('imageLoaded')
@@ -23,6 +25,8 @@ function imageLoaded () {
         updateCurrentStoryReady(true)
     })
 }
+
+// const component = computed(() => import(`./content/${currentStory.component}.vue`))
 
 </script>
 
@@ -45,13 +49,23 @@ function imageLoaded () {
             v-if="currentStory.component === 'SkillStory'"
             v-bind="currentStory"
         />
-        <img
-            v-show="currentStory.imageUrl"
-            :src="currentStory.imageUrl"
-            alt="story_image"
-            class="story-image__img"
-            @load="imageLoaded"
-        >
+        <ProjectStory
+            v-if="currentStory.component === 'ProjectStory'"
+            v-bind="currentStory"
+        />
+        <ContactStory
+            v-if="currentStory.component === 'ContactStory'"
+            v-bind="currentStory"
+        />
+        <keep-alive>
+            <img
+                v-show="currentStory.imageUrl"
+                :src="currentStory.imageUrl"
+                alt="story_image"
+                class="story-image__img"
+                @load="imageLoaded"
+            >
+        </keep-alive>
         <div
             v-if="!isCurrentStoryReady"
             class="loading-container"

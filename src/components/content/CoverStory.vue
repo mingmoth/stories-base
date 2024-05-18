@@ -24,6 +24,7 @@
                 <a
                     :href="`${getUrlIconPrefix(info)}${ info.url }`"
                     role="button"
+                    target="_blank"
                 >
                     <img
                         :src="`/contact/${ info.icon }.png`"
@@ -32,6 +33,18 @@
                     >
                 </a>
             </div>
+        </div>
+        <div
+            v-if="intros.length"
+            class="cover-story__intro-wrap"
+        >
+            <li
+                v-for="(intro, index) in props.intros"
+                :key="index"
+                class="cover-story__intro-item"
+            >
+                {{ intro }}
+            </li>
         </div>
     </div>
 </template>
@@ -43,6 +56,10 @@ const props = defineProps({
         default: ''
     },
     infos: {
+        type: Array,
+        default: () => ([])
+    },
+    intros: {
         type: Array,
         default: () => ([])
     },
@@ -74,6 +91,14 @@ function getUrlIconPrefix (info) {
     &__icon {
         height: 32px;
         width: 32px;
+    }
+
+    &__intro-wrap {
+        text-align: start;
+        padding: 0 5%;
+        font-size: 18px;
+        line-height: 30px;
+        font-weight: 600;
     }
 }
 </style>

@@ -13,16 +13,16 @@
             {{ props.subTitle }}
         </h2>
         <div
-            v-if="infos.length"
+            v-if="props.infos.length"
             class="about-story__info-wrap"
         >
-            <h3
+            <li
                 v-for="(info, index) in props.infos"
                 :key="index"
                 class="about-story__info-item"
             >
                 {{ info }}
-            </h3>
+            </li>
         </div>
     </div>
 </template>
@@ -54,6 +54,9 @@ const props = defineProps({
     &__info-wrap {
         text-align: start;
         padding: 0 5%;
+        font-size: 18px;
+        line-height: 30px;
+        font-weight: 600;
     }
 }
 </style>
