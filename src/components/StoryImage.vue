@@ -79,13 +79,14 @@ function imageLoaded () {
 
 .story-image {
     margin: auto;
-    width: 500px;
-    height: 100%;
+    width: 100%;
+    height: 100vh;
     cursor: pointer;
     text-align: center;
     padding: 20px;
     position: relative;
     background: black;
+    box-sizing: border-box;
 
     &__img {
         width: 100%;
@@ -99,13 +100,19 @@ function imageLoaded () {
 }
 
 .loading-container {
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
     background: black;
     position: absolute;
     top: 0;
     left: 0;
     z-index: 2;
     display: grid;
+}
+
+@media (min-width: 500px) {
+    .story-image {
+        width: 500px;
+    }
 }
 </style>

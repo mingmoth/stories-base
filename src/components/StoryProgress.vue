@@ -39,7 +39,7 @@ const itemNum = computed(() => {
     top: 12px;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 500px;
+    width: 100%;
     height: 2px;
     display: grid;
     grid-template-columns: v-bind('`repeat(${itemNum}, 1fr)`');
@@ -55,6 +55,12 @@ const itemNum = computed(() => {
         &--displayed {
             background: white;
         }
+    }
+}
+
+@media (min-width: 500px) {
+    .story-progress {
+        width: 500px;
     }
 }
 </style>
